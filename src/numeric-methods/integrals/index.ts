@@ -1,7 +1,7 @@
 import { Grid1D } from "../interpolation/__shared-types";
 import { Function2D } from "../__shared-types";
-import { useGrid1DSegmentsNum } from "../charting-tools";
 import nj from "numjs";
+
 
 export const integrateRectangleMethod = (function2D: Function2D, grid: Grid1D): number => {
 

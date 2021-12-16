@@ -9,3 +9,33 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+body::-webkit-scrollbar {
+  width: 10px;               /* ширина scrollbar */
+}
+body::-webkit-scrollbar-track {
+  background: gray;        /* цвет дорожки */
+}
+body::-webkit-scrollbar-thumb {
+  background-color: black;    /* цвет плашки */
+  border: 2px solid black;  /* padding вокруг плашки */
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scroll {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.mantine-AppShell-body {
+  min-height: 100vh;
+  height: 100%;
+}
+
+.mantine-10oh6qm {
+  padding: 0;
+}

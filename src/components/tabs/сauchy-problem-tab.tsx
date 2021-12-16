@@ -62,15 +62,15 @@ export const CauchyProblemTab = () => {
         segments: number,
 
     }>({
-        function3D: (x, y) => x ** 2 * y,
+        function3D: (x, y) => x * x * y,
         stringFunction3D: 'f(x, y) = x^2 * y',
         step: 0.01,
         segments: 100
     })
 
     const [analyticSolution, setAnalyticSolution] = useState({
-        stringFunction: 'f(x) = 1.671 * exp(x ** 3 / 3)',
-        function2D: (x: number) => 1.671 * Math.exp(x ** 3 / 3)
+        stringFunction: `f(x) = ${(startingPoint.y) / (Math.exp((startingPoint.x ** 3) / 3))} * exp(x ** 3 / 3)`,
+        function2D: (x: number) => ((startingPoint.y) / (Math.exp((startingPoint.x ** 3) / 3))) * Math.exp((x ** 3) / 3)
     })
 
     useEffect(() => {
@@ -215,8 +215,8 @@ export const CauchyProblemTab = () => {
                             required
                         />
                         <NumberInput
-                            step={0.01}
-                            precision={3}
+                            step={0.0001}
+                            precision={8}
                             value={methodParams.step}
                             onChange={(value) => setMethodParams({
                                 ...methodParams,
