@@ -2,9 +2,8 @@ import React, { FC, useEffect, useState } from "react";
 
 import { Autocomplete, Box, Checkbox, Group, NumberInput } from "@mantine/core";
 
-import { bisectionIterativeMethod, bisectionRecursiveMethod } from "../../equation-roots/bisection-method";
-import { secantMethod } from "../../equation-roots/secant-method";
-import { parseFunction } from "../../functions-parser";
+import { bisectionIterativeMethod, bisectionRecursiveMethod, secantMethod, parseFunction } from "../../numeric-methods";
+
 import {
     AnimatedAxis,
     AnimatedLineSeries,
@@ -16,8 +15,23 @@ import { curveNatural } from "@visx/curve";
 
 import nj from "numjs";
 
-import { FunctionData } from "./chart-tab";
-import { Node2D } from "../../interpolation/__shared-types";
+import { Grid2D, Node2D } from "../../numeric-methods";
+
+
+export const Label: FC = (props) => {
+
+    return (
+        <label style={{
+            display: 'block',
+            color: '#FFFFFF',
+            paddingBottom: '1em',
+            fontSize: 14,
+        }}>
+            {props.children}
+        </label>
+    );
+
+}
 
 
 const accessors = {
@@ -112,7 +126,7 @@ export const FunctionRootsTab = () => {
         }
     });
 
-    const [ sourceFunctionData, setSourceFunctionData ] = useState<FunctionData>([])
+    const [ sourceFunctionData, setSourceFunctionData ] = useState<Grid2D>([])
 
 
     const compute = () => {
@@ -165,20 +179,6 @@ export const FunctionRootsTab = () => {
 
     const [showRecursion, setShowRecursion] = useState(false);
 
-    const Label: FC = (props) => {
-
-        return (
-            <label style={{
-                display: 'block',
-                color: '#FFFFFF',
-                paddingBottom: '1em',
-                fontSize: 14,
-            }}>
-                {props.children}
-            </label>
-        );
-
-    }
 
     return (
         <Group>

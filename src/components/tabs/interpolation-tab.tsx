@@ -16,148 +16,102 @@ import {
     darkTheme,
 } from '@visx/xychart';
 
-import nj from 'numjs';
-
-import { interpolateLagrange } from "../../interpolation/lagrange";
-import { interpolateSpline } from "../../interpolation/spline";
-import { parseFunction } from "../../functions-parser";
-
-
-export type FunctionData = Array<{
-    x: number,
-    y: number
-}>;
-
-const useFunctionInterpolator = (
-    xLeftBound: number,
-    xRightBound: number,
-    interpolationStep: number,
-    estimationStep: number,
-    function2D: (x: number) => number
-) => {
-
-    const createLinspace = (step: number) => {
-        let nodes = nj.arange(xLeftBound, xRightBound, step).tolist();
-        nodes.push(xRightBound);
-        return nodes;
-    }
-
-    const interpolationNodes = createLinspace(interpolationStep).map(x => {
-        return {
-            x: x,
-            y: function2D(x)
-        };
-    });
-
-    const sourceFunctionData = createLinspace(estimationStep).map(x => {
-        return {
-            x: x,
-            y: function2D(x)
-        };
-    });
-
-    const lagrangePolyData = createLinspace(estimationStep).map(x => {
-        return {
-            x: x,
-            y: interpolateLagrange(x, interpolationNodes)
-        };
-    });
-
-    const splinesData = createLinspace(estimationStep).map(x => {
-        return {
-            x: x,
-            y: interpolateSpline(x, interpolationNodes)
-        };
-    });
-
-    const diffRMS = (one: FunctionData, another: FunctionData) => {
-        let sum = 0;
-        one.forEach((point, index) => {
-            sum += (point.y - another[index].y) ** 2;
-        })
-        return Math.sqrt(sum);
-    }
-
-    const inaccuracyLagrange = () => {
-        return diffRMS(sourceFunctionData, lagrangePolyData);
-    }
-
-    const inaccuracySpline = () => {
-        return diffRMS(sourceFunctionData, splinesData);
-    }
-
-    return {
-        interpolationNodes,
-        sourceFunctionData,
-        lagrangePolyData,
-        splinesData,
-        inaccuracyLagrange,
-        inaccuracySpline,
-    }
-}
+import {
+    accessors,
+    interpolateLagrange,
+    interpolateSpline,
+    parseFunction, useEuclideanDistance,
+    useFunctionData2D,
+    useGrid1D,
+    useInterpolation,
+    GridDescriptor
+} from "../../numeric-methods";
 
 
-const accessors = {
-    xAccessor: (d: { x: number, y: number }): number => d.x,
-    yAccessor: (d: { x: number, y: number }): number => d.y,
-};
+export const InterpolationTab = () => {
 
+    const [ grid, setGrid ] = useState<GridDescriptor>({
+        leftBound: 0,
+        rightBound: 10,
+        num: 0.1,
+    })
 
-export const ChartTab = () => {
-
-    const [ params, setParams ] = useState({
-        left: 0,
-        right: 10,
+    const [ parameters, setParameters ] = useState({
         interpolationStep: 1.5,
-        estimationStep: 0.1,
-        funcString: 'f(x) = 2 * sin(x ^ 2 / 14)',
-        func: (x: number) => 2 * Math.sin(x ** 2 / 14),
+        functionString: 'f(x) = 2 * sin(x ^ 2 / 14)',
+        function2D: (x: number) => 2 * Math.sin(x ** 2 / 14),
     });
 
     const onLeftBoundChange = (value?: number) => {
-        setParams({
-            ...params,
-            left: value || params.left
+        setGrid({
+            ...grid,
+            leftBound: value || grid.leftBound
         });
     }
 
     const onRightBoundChange = (value?: number) => {
-        setParams({
-            ...params,
-            right: value || params.right
-        });
-    }
-
-    const onInterpolationStepChange = (value?: number) => {
-        setParams({
-            ...params,
-            interpolationStep: value || params.interpolationStep
+        setGrid({
+            ...grid,
+            rightBound: value || grid.rightBound
         });
     }
 
     const onEstimationStepChange = (value?: number) => {
-        setParams({
-            ...params,
-            estimationStep: value || params.estimationStep
+        setGrid({
+            ...grid,
+            num: value || grid.num
+        });
+    }
+
+    const onInterpolationStepChange = (value?: number) => {
+        setParameters({
+            ...parameters,
+            interpolationStep: value || parameters.interpolationStep
         });
     }
 
     const onFunctionChange = (value: string) => {
-        setParams({
-            ...params,
-            funcString: value,
-            func: parseFunction(value)
+        setParameters({
+            ...parameters,
+            functionString: value,
+            function2D: parseFunction(value)
         });
     }
 
-    const {
+    const interpolationNodesGrid = useGrid1D(grid.leftBound, grid.rightBound, parameters.interpolationStep);
+    const plottingPrecisionGrid = useGrid1D(grid.leftBound, grid.rightBound, grid.num);
+
+    const interpolationNodes = useFunctionData2D(
+        interpolationNodesGrid,
+        parameters.function2D
+    );
+
+    const sourceFunctionData = useFunctionData2D(
+        plottingPrecisionGrid,
+        parameters.function2D
+    );
+
+    const interpolatedDataLagrange = useInterpolation(
+        plottingPrecisionGrid,
         interpolationNodes,
+        interpolateLagrange
+    );
+
+    const interpolatedDataSplines = useInterpolation(
+        plottingPrecisionGrid,
+        interpolationNodes,
+        interpolateSpline
+    );
+
+    const inaccuracyLagrange = useEuclideanDistance(
         sourceFunctionData,
-        lagrangePolyData,
-        splinesData,
-        inaccuracyLagrange,
-        inaccuracySpline,
-    } = useFunctionInterpolator(params.left, params.right, params.interpolationStep, params.estimationStep, params.func);
+        interpolatedDataLagrange
+    );
+
+    const inaccuracySpline = useEuclideanDistance(
+        sourceFunctionData,
+        interpolatedDataSplines
+    );
 
 
     const [ showNodes, setShowNodes ] = useState(true);
@@ -200,12 +154,12 @@ export const ChartTab = () => {
                     }
                     {
                         showLagrange &&
-                        <AnimatedLineSeries dataKey="Lagrange" data={lagrangePolyData}
+                        <AnimatedLineSeries dataKey="Lagrange" data={interpolatedDataLagrange}
                                             curve={curveNatural} {...accessors}  />
                     }
                     {
                         showSplines &&
-                        <AnimatedLineSeries dataKey="Splines" data={splinesData} curve={curveNatural} {...accessors}  />
+                        <AnimatedLineSeries dataKey="Splines" data={interpolatedDataSplines} curve={curveNatural} {...accessors}  />
                     }
                     <Tooltip
                         snapTooltipToDatumX
@@ -243,7 +197,7 @@ export const ChartTab = () => {
                     defaultValue={0}
                     precision={2}
                     step={0.05}
-                    value={params.left}
+                    value={grid.leftBound}
                     onChange={onLeftBoundChange}
                     placeholder="0"
                     label="Left x bound"
@@ -255,7 +209,7 @@ export const ChartTab = () => {
                     defaultValue={0}
                     precision={2}
                     step={0.05}
-                    value={params.right}
+                    value={grid.rightBound}
                     onChange={onRightBoundChange}
                     placeholder="10"
                     label="Right x bound"
@@ -267,7 +221,7 @@ export const ChartTab = () => {
                     defaultValue={0.5}
                     precision={2}
                     step={0.05}
-                    value={params.interpolationStep}
+                    value={parameters.interpolationStep}
                     onChange={onInterpolationStepChange}
                     placeholder="0.5"
                     label="Interpolation step"
@@ -284,14 +238,14 @@ export const ChartTab = () => {
                     label="Function"
                     description="f(x) function to interpolate"
                     onChange={onFunctionChange}
-                    value={params.funcString}
+                    value={parameters.functionString}
                     required
                 />
                 <NumberInput
                     defaultValue={0.1}
                     step={0.01}
                     precision={2}
-                    value={params.estimationStep}
+                    value={grid.num}
                     onChange={onEstimationStepChange}
                     placeholder="0.1"
                     label="Estimation step"
@@ -299,9 +253,9 @@ export const ChartTab = () => {
                     radius="xs"
                     required
                 />
-                <Blockquote cite="Inaccuracy (computes as DeltaRMS)" icon={<Cross1Icon/>}>
-                    Lagrange: {inaccuracyLagrange()} <br/>
-                    Spline: {inaccuracySpline()}
+                <Blockquote cite="Inaccuracy (computes as Euclidian distance)" icon={<Cross1Icon/>}>
+                    Lagrange: {inaccuracyLagrange} <br/>
+                    Spline: {inaccuracySpline}
                 </Blockquote>
                 <Group>
                     <Checkbox label='Interpolation nodes' checked={showNodes}

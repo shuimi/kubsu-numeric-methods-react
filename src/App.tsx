@@ -4,10 +4,8 @@ import { AppShell, MantineTheme } from '@mantine/core';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { Header } from './components/shared/header';
-import { PATHS } from './paths';
-import { IntegralsTab } from "./components/tabs";
-import ChartTab from "./components/tabs/chart-tab";
-import { FunctionRootsTab } from "./components/tabs";
+import { PATHS } from './meta/paths';
+import { IntegralsTab, FunctionRootsTab, InterpolationTab, CauchyProblemTab } from "./components/tabs";
 
 
 const shellStyle = (theme: MantineTheme) => ({
@@ -22,9 +20,10 @@ const App = () => {
         <BrowserRouter>
             <AppShell header={<Header/>} styles={shellStyle}>
                 <Routes>
-                    <Route path={PATHS.INTERPOLATION} element={<ChartTab/>}/>
+                    <Route path={PATHS.INTERPOLATION} element={<InterpolationTab/>}/>
                     <Route path={PATHS.FUNCTION_ZEROES} element={<FunctionRootsTab/>}/>
                     <Route path={PATHS.INTEGRALS} element={<IntegralsTab/>}/>
+                    <Route path={PATHS.CAUCHY_PROBLEM} element={<CauchyProblemTab/>}/>
                 </Routes>
             </AppShell>
         </BrowserRouter>

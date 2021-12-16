@@ -19,6 +19,7 @@
     "@types/react-dom": "^17.0.0",
     "@visx/curve": "^2.1.0",
     "@visx/legend": "^2.2.2",
+    "@visx/responsive": "^2.4.1",
     "@visx/scale": "^2.2.2",
     "@visx/xychart": "^2.5.0",
     "dayjs": "^1.10.7",

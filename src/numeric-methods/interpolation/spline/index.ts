@@ -1,7 +1,7 @@
-import nj from "numjs";
-import { InterpolationFunction } from "../__shared-types";
+import nj from 'numjs';
+import { InterpolationFunction } from '../__shared-types';
 
-const linear = require("linear-solve");
+const linear = require('linear-solve');
 
 
 export const interpolateSpline: InterpolationFunction = (x, interpolationNodes) => {
@@ -24,7 +24,7 @@ export const interpolateSpline: InterpolationFunction = (x, interpolationNodes) 
 
     // @three-diagonal matrix
 
-    const matrixT = nj.zeros([size, size]);
+    const matrixT = nj.zeros([ size, size ]);
 
     matrixT.set(0, 0, 1.0);
     matrixT.set(size - 1, size - 1, 1.0);

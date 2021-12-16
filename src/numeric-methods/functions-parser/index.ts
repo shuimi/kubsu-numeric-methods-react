@@ -1,4 +1,4 @@
-import * as math from "mathjs";
+import * as math from 'mathjs';
 
 const parser = math.parser();
 

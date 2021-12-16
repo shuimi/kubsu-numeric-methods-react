@@ -1,4 +1,4 @@
-import { BisectionIterativeMethod, BisectionRecursiveMethod } from "../__shared-types";
+import { BisectionIterativeMethod, BisectionRecursiveMethod } from '../__shared-types';
 
 
 //@@@

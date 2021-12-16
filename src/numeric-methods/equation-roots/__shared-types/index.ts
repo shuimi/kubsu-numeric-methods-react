@@ -1,5 +1,7 @@
 //@@@
 
+import { Function2D, Precision } from "../../__shared-types";
+
 export interface OneRootResult {
     root: number,
 }
@@ -15,10 +17,6 @@ export interface IterativeMethodResult {
 export interface RecursiveMethodResult {
     maxRecursionDepth: number
 }
-
-export type Function2D = (x: number) => number;
-
-export type Precision = number;
 
 export type BisectionIterativeMethod = (
     xLeftBound: number,

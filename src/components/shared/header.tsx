@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { Link } from 'react-router-dom';
-import { PATHS } from '../../paths';
+import { PATHS } from '../../meta/paths';
 
 import { Button, Group, Header as MantineHeader } from '@mantine/core';
-import { FontFamilyIcon, FrameIcon, SlashIcon } from '@radix-ui/react-icons';
+import { FontFamilyIcon, FrameIcon, SlashIcon, GridIcon } from '@radix-ui/react-icons';
 
 
 export const Header = () => {
@@ -25,6 +25,11 @@ export const Header = () => {
                 <Link to={PATHS.INTEGRALS}>
                     <Button leftIcon={<SlashIcon/>} variant='outline' color='gray'>
                         Integrals
+                    </Button>
+                </Link>
+                <Link to={PATHS.CAUCHY_PROBLEM}>
+                    <Button leftIcon={<GridIcon/>} variant='outline' color='gray'>
+                        Cauchy problem
                     </Button>
                 </Link>
             </Group>

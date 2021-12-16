@@ -1,4 +1,4 @@
-import { SecantMethod } from "../__shared-types";
+import { SecantMethod } from '../__shared-types';
 
 
 //@@@
