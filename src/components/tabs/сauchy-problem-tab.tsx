@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Autocomplete, Box, Center, Code, Group, NumberInput, Text, Button, useMantineTheme } from "@mantine/core";
 import { AnimatedAxis, AnimatedLineSeries, darkTheme, Grid, Tooltip, XYChart } from "@visx/xychart";
 import { curveNatural } from "@visx/curve";
-import { accessors, Function3D, Grid2D, Node2D, parseFunction, useGrid1D } from "../../numeric-methods";
+import { accessors, Function3D, GridSet2D, Node2D, parseFunction, useGrid1D } from "../../numeric-methods";
 import { methodRungeKutta } from "../../numeric-methods/cauchy-problem";
 import { useMove } from "@mantine/hooks";
 import { Label } from "./function-roots-tab";
@@ -32,13 +32,13 @@ export const CauchyProblemTab = () => {
 
     const [ functionsData, setFunctionsData ] = useState<Array<{
         key: string,
-        data: Grid2D
+        data: GridSet2D
     }>>([]);
 
     const [ solutionsAmount, setSolutionsAmount ] = useState<number>(0);
     const incrementSolutionsAmount = () => setSolutionsAmount(amount => amount + 1);
 
-    const addFunctionData = (data: Grid2D) => {
+    const addFunctionData = (data: GridSet2D) => {
         setFunctionsData([
             ...functionsData,
             {

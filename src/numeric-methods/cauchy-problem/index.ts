@@ -1,4 +1,4 @@
-import { Function3D, Grid2D, Node2D } from "../__shared-types";
+import { Function3D, GridSet2D, Node2D } from "../__shared-types";
 
 /**
  * Runge-Kutta 4th order method.
@@ -20,9 +20,9 @@ import { Function3D, Grid2D, Node2D } from "../__shared-types";
  * @param {number} iterationsLimit - iterations limit
  * @returns {number}
  */
-export const methodRungeKutta = (function3D: Function3D, startingPoint: Node2D, step: number, iterationsLimit: number): Grid2D => {
+export const methodRungeKutta = (function3D: Function3D, startingPoint: Node2D, step: number, iterationsLimit: number): GridSet2D => {
 
-    let resultFunctionData: Grid2D = [];
+    let resultFunctionData: GridSet2D = [];
 
     let x = startingPoint.x;
     let y = startingPoint.y;

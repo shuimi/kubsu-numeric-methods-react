@@ -15,7 +15,7 @@ import { curveNatural } from "@visx/curve";
 
 import nj from "numjs";
 
-import { Grid2D, Node2D } from "../../numeric-methods";
+import { GridSet2D, Node2D } from "../../numeric-methods";
 
 
 export const Label: FC = (props) => {
@@ -126,7 +126,7 @@ export const FunctionRootsTab = () => {
         }
     });
 
-    const [ sourceFunctionData, setSourceFunctionData ] = useState<Grid2D>([])
+    const [ sourceFunctionData, setSourceFunctionData ] = useState<GridSet2D>([])
 
 
     const compute = () => {

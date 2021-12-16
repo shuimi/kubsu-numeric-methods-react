@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { PATHS } from '../../meta/paths';
 
 import { Button, Group, Header as MantineHeader } from '@mantine/core';
-import { FontFamilyIcon, FrameIcon, SlashIcon, GridIcon } from '@radix-ui/react-icons';
+import { FontFamilyIcon, FrameIcon, SlashIcon, GridIcon, BorderNoneIcon } from '@radix-ui/react-icons';
 
 
 export const Header = () => {
@@ -30,6 +30,11 @@ export const Header = () => {
                 <Link to={PATHS.CAUCHY_PROBLEM}>
                     <Button leftIcon={<GridIcon/>} variant='outline' color='gray'>
                         Cauchy problem
+                    </Button>
+                </Link>
+                <Link to={PATHS.HEAT_EQUATION}>
+                    <Button leftIcon={<BorderNoneIcon/>} variant='outline' color='gray'>
+                        Heat equation
                     </Button>
                 </Link>
             </Group>

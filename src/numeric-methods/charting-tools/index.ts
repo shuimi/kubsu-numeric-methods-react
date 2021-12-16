@@ -1,10 +1,10 @@
 import nj from "numjs";
 
-import { Grid1D, Grid2D, Node2D } from "../interpolation/__shared-types";
+import { Grid1D, GridSet2D, Node2D } from "../interpolation/__shared-types";
 import { Accessor, Function2D } from "../__shared-types";
 
 
-export const useEuclideanDistance = (one: Grid2D, another: Grid2D): number => {
+export const useEuclideanDistance = (one: GridSet2D, another: GridSet2D): number => {
     let sum = 0;
     one.forEach((point, index) => {
         sum += (point.y - another[index].y) ** 2;
@@ -40,7 +40,7 @@ export const useGrid1D = (xLeftBound: number, xRightBound: number, step: number)
     return nodes;
 }
 
-export const useFunctionData2D = (grid: Grid1D, function2D: Function2D): Grid2D => {
+export const useFunctionData2D = (grid: Grid1D, function2D: Function2D): GridSet2D => {
     return grid.map(x => {
         return {
             x: x,

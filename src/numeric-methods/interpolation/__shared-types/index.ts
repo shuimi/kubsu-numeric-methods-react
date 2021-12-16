@@ -7,6 +7,8 @@ export type GridDescriptor = {
 };
 
 export type Grid1D = Array<number>;
-export type Grid2D = Array<Node2D>;
+export type GridSet2D = Array<Node2D>;
+export type Grid2D = Array<Grid1D>;
 
-export type InterpolationFunction = (x: number, interpolationNodes: Grid2D) => number;
+
+export type InterpolationFunction = (x: number, interpolationNodes: GridSet2D) => number;

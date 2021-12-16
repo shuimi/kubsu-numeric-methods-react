@@ -3,4 +3,5 @@ export const PATHS = {
     FUNCTION_ZEROES: 'function-zeroes',
     INTEGRALS: 'integrals',
     CAUCHY_PROBLEM: 'cauchy-problem',
+    HEAT_EQUATION: 'heat-equation',
 }

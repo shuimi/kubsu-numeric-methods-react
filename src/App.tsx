@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { Header } from './components/shared/header';
 import { PATHS } from './meta/paths';
-import { IntegralsTab, FunctionRootsTab, InterpolationTab, CauchyProblemTab } from "./components/tabs";
+import { IntegralsTab, FunctionRootsTab, InterpolationTab, CauchyProblemTab, HeatEquationTab } from "./components/tabs";
 
 
 const shellStyle = (theme: MantineTheme) => ({
@@ -24,6 +24,7 @@ const App = () => {
                     <Route path={PATHS.FUNCTION_ZEROES} element={<FunctionRootsTab/>}/>
                     <Route path={PATHS.INTEGRALS} element={<IntegralsTab/>}/>
                     <Route path={PATHS.CAUCHY_PROBLEM} element={<CauchyProblemTab/>}/>
+                    <Route path={PATHS.HEAT_EQUATION} element={<HeatEquationTab/>}/>
                 </Routes>
             </AppShell>
         </BrowserRouter>
