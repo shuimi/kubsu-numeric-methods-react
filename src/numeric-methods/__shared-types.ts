@@ -1,7 +1,7 @@
 import { Grid1D, GridSet2D, InterpolationFunction, Node2D } from "./interpolation/__shared-types";
 
-export type Function2D = (x: number) => number;
-export type Function3D = (x: number, y: number) => number;
+export type Function1D = (x: number) => number;
+export type Function2D = (x: number, y: number) => number;
 
 export type Precision = number;
 

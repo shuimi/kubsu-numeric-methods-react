@@ -1,17 +1,17 @@
-import { Function2D, Function3D, Grid2D, GridSet2D } from "../__shared-types";
+import { Function1D, Function2D, Grid2D, GridSet2D } from "../__shared-types";
 import nj from "numjs";
 
 
 export interface TemporalCondition {
     startingMoment: number,
-    condition: Function2D & Function3D
+    condition: Function1D & Function2D
 }
 
 export interface SpatialCondition {
     leftBound: number,
     rightBound: number,
-    conditionLeft: Function2D & Function3D,
-    conditionRight: Function2D & Function3D,
+    conditionLeft: Function1D & Function2D,
+    conditionRight: Function1D & Function2D,
 }
 
 export interface GridDescriptor {
@@ -72,8 +72,8 @@ export const methodSchmidt1D = (
 
         let truncatedMesh = nj
             .arange(
-                spatialCondition.leftBound + grid.spatialStep,
-                spatialCondition.rightBound - grid.spatialStep,
+                spatialCondition.leftBound,
+                spatialCondition.rightBound,
                 grid.spatialStep
             )
             .tolist()
@@ -92,7 +92,7 @@ export const methodSchmidt1D = (
 
         heatmap.push({
             x: spatialCondition.rightBound,
-            y: spatialCondition.conditionRight(spatialCondition.rightBound)
+            y: spatialCondition.conditionRight(temporalCondition.startingMoment + (j) * grid.temporalStep)
         });
         heatmapsHistory.push(heatmap);
 

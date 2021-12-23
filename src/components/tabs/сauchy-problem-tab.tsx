@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Autocomplete, Box, Center, Code, Group, NumberInput, Text, Button, useMantineTheme } from "@mantine/core";
 import { AnimatedAxis, AnimatedLineSeries, darkTheme, Grid, Tooltip, XYChart } from "@visx/xychart";
 import { curveNatural } from "@visx/curve";
-import { accessors, Function3D, GridSet2D, Node2D, parseFunction, useGrid1D } from "../../numeric-methods";
+import { accessors, Function2D, GridSet2D, Node2D, parseFunction, useGrid1D } from "../../numeric-methods";
 import { methodRungeKutta } from "../../numeric-methods/cauchy-problem";
 import { useMove } from "@mantine/hooks";
 import { Label } from "./function-roots-tab";
@@ -56,7 +56,7 @@ export const CauchyProblemTab = () => {
 
 
     const [ methodParams, setMethodParams ] = useState<{
-        function3D: Function3D,
+        function3D: Function2D,
         stringFunction3D: string,
         step: number,
         segments: number,

@@ -1,9 +1,9 @@
 import { Grid1D } from "../interpolation/__shared-types";
-import { Function2D } from "../__shared-types";
+import { Function1D } from "../__shared-types";
 import nj from "numjs";
 
 
-export const integrateRectangleMethod = (function2D: Function2D, grid: Grid1D): number => {
+export const integrateRectangleMethod = (function2D: Function1D, grid: Grid1D): number => {
 
     let sum: number = 0;
     let sectionLength: number = grid[1] - grid[0];
@@ -16,7 +16,7 @@ export const integrateRectangleMethod = (function2D: Function2D, grid: Grid1D): 
 
 }
 
-export const integrateTrapezoidMethod = (function2D: Function2D, grid: Grid1D) => {
+export const integrateTrapezoidMethod = (function2D: Function1D, grid: Grid1D) => {
 
     let sum: number = 0;
     let sectionLength: number = grid[1] - grid[0];
@@ -31,7 +31,7 @@ export const integrateTrapezoidMethod = (function2D: Function2D, grid: Grid1D) =
 
 }
 
-export const integrateSimpsonMethod = (function2D: Function2D, grid: Grid1D) => {
+export const integrateSimpsonMethod = (function2D: Function1D, grid: Grid1D) => {
 
     let sum: number = 0;
 
@@ -58,11 +58,11 @@ export const getGrid1D = (xLeftBound: number, xRightBound: number, num: number) 
 
 
 export const withEpsilon = (
-    function2D: Function2D,
+    function2D: Function1D,
     xLeftBound: number,
     xRightBound: number,
     num: number,
-    integrationFunction: (function2D: Function2D, grid: Grid1D) => number,
+    integrationFunction: (function2D: Function1D, grid: Grid1D) => number,
     epsilon: number
 ) => {
 

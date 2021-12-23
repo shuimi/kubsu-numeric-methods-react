@@ -1,7 +1,7 @@
 import nj from "numjs";
 
 import { Grid1D, GridSet2D, Node2D } from "../interpolation/__shared-types";
-import { Accessor, Function2D } from "../__shared-types";
+import { Accessor, Function1D } from "../__shared-types";
 
 
 export const useEuclideanDistance = (one: GridSet2D, another: GridSet2D): number => {
@@ -40,7 +40,7 @@ export const useGrid1D = (xLeftBound: number, xRightBound: number, step: number)
     return nodes;
 }
 
-export const useFunctionData2D = (grid: Grid1D, function2D: Function2D): GridSet2D => {
+export const useFunctionData2D = (grid: Grid1D, function2D: Function1D): GridSet2D => {
     return grid.map(x => {
         return {
             x: x,

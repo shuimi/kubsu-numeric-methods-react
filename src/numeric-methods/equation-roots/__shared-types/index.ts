@@ -1,6 +1,6 @@
 //@@@
 
-import { Function2D, Precision } from "../../__shared-types";
+import { Function1D, Precision } from "../../__shared-types";
 
 export interface OneRootResult {
     root: number,
@@ -21,7 +21,7 @@ export interface RecursiveMethodResult {
 export type BisectionIterativeMethod = (
     xLeftBound: number,
     xRightBound: number,
-    function2D: Function2D,
+    function2D: Function1D,
     epsilon: Precision,
     iterationsLimit?: number
 ) => OneRootResult & IterativeMethodResult;
@@ -29,7 +29,7 @@ export type BisectionIterativeMethod = (
 export type BisectionRecursiveMethod = (
     xLeftBound: number,
     xRightBound: number,
-    function2D: Function2D,
+    function2D: Function1D,
     epsilon: Precision,
     depthLimit?: number
 ) => ManyRootsResult & RecursiveMethodResult;
@@ -37,6 +37,6 @@ export type BisectionRecursiveMethod = (
 export type SecantMethod = (
     xLeftBound: number,
     xRightBound: number,
-    function2D: Function2D,
+    function2D: Function1D,
     epsilon: Precision
 ) => OneRootResult & IterativeMethodResult;

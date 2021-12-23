@@ -72,7 +72,7 @@ const Card = (props: {title: string, value: number, inaccuracy: number, loading:
     )
 }
 
-const GroupBox: FC = (props) => {
+export const GroupBox: FC = (props) => {
     return (
         <Box
             // @ts-ignore
@@ -263,7 +263,7 @@ export const IntegralsTab = () => {
     return (
         <Center>
             <Group>
-                <XYChart height={500} width={700} xScale={{ type: 'linear' }} yScale={{ type: 'linear' }}
+                <XYChart height={500} width={650} xScale={{ type: 'linear' }} yScale={{ type: 'linear' }}
                          theme={darkTheme}>
                     <AnimatedAxis orientation={'bottom'}/>
                     <AnimatedAxis orientation={'left'}/>
